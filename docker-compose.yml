@@ -49,6 +49,20 @@ services:
                 - '-p${DB_PASSWORD}'
             retries: 3
             timeout: 5s
+    phpmyadmin:
+        image: "phpmyadmin/phpmyadmin"
+        restart: always
+        ports:
+            - 9000:80
+        networks:
+            - sail
+        environment:
+            PMA_ARBITRARY: 1
+            PMA_HOST: '${DB_HOST}'
+            PMA_PORT: '${DB_PORT}'
+            PMA_USER: '${DB_USERNAME}'
+            PMA_PASSWORD: '${DB_PASSWORD}'
+
     redis:
         image: 'redis:alpine'
         ports:
