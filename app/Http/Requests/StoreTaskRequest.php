@@ -3,6 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
+use App\Enums\TaskStatus;
+
 
 class StoreTaskRequest extends FormRequest
 {
@@ -11,7 +14,8 @@ class StoreTaskRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        // return false;
+        return true;
     }
 
     /**
@@ -22,7 +26,10 @@ class StoreTaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title'       => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'status'      => ['sometimes', new Enum(TaskStatus::class)],
+            'due_date'      => ['required', 'date'],
         ];
     }
 }
