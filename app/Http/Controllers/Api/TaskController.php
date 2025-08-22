@@ -72,4 +72,13 @@ class TaskController extends Controller
 
         return response()->json($task);
     }
+    /**
+     * DELETE /api/tasks/{task}
+     */
+    public function destroy(Task $task)
+    {
+        $task->delete();
+
+        return response()->noContent();
+    }
 }

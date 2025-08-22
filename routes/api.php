@@ -23,7 +23,7 @@ Route::get('/tasks', [TaskController::class, 'index']);
 Route::post('/tasks', [TaskController::class, 'store']);
 Route::get('/tasks/{task}', [TaskController::class, 'show']);
 Route::patch('/tasks/{task}/status', [TaskController::class, 'updateStatus']);
-
+Route::delete('/tasks/{task}', [TaskController::class, 'destroy']);
 // Route::prefix('tasks')->group(
 //     function () {
 //         Route::get('/', [TaskController::class, 'index']);
