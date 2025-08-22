@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskStatusRequest;
 use Illuminate\Http\Request;
+use App\Http\Resources\TaskResource;
 
 class TaskController extends Controller
 {
@@ -28,10 +29,20 @@ class TaskController extends Controller
         if ($request->boolean('overdue')) {
             $query->overdue();
         }
+        // Sorting & pagination
+        $sort = in_array($request->query('sort'), ['due_date', 'created_at'], true)
+            ? $request->query('sort')
+            : 'due_date';
+        $direction = $request->query('direction') === 'desc' ? 'desc' : 'asc';
+        $perPage = (int) $request->query('per_page', 25);
+        $perPage = max(1, min($perPage, 100)); // clamp 1..100
 
-        $tasks = $query->orderBy('due_date')->orderByDesc('created_at')->get();
+        $tasks = $query
+            ->orderBy($sort, $direction)
+            ->paginate($perPage)
+            ->withQueryString();
 
-        return response()->json($tasks);
+        return TaskResource::collection($tasks);
     }
     /**
      * POST /api/tasks
@@ -42,23 +53,17 @@ class TaskController extends Controller
         $data = $request->validated();
 
         // Default status if not supplied
-        $status = $data['status'] ?? TaskStatus::TODO->value;
+        $data['status'] = $data['status'] ?? TaskStatus::TODO->value;
+        $task = Task::create($data);
 
-        $task = Task::create([
-            'title'       => $data['title'],
-            'description' => $data['description'] ?? null,
-            'status'      => $status,
-            'due_date'      => $data['due_date'],
-        ]);
-
-        return response()->json($task, 201);
+        return TaskResource::make($task)->response()->setStatusCode(201);
     }
     /**
      * GET /api/tasks/{task}
      */
     public function show(Task $task)
     {
-        return response()->json($task);
+        return TaskResource::make($task);
     }
     /**
      * PATCH /api/tasks/{task}/status
@@ -70,7 +75,7 @@ class TaskController extends Controller
             'status' => $request->validated('status'),
         ]);
 
-        return response()->json($task);
+        return TaskResource::make($task);
     }
     /**
      * DELETE /api/tasks/{task}
