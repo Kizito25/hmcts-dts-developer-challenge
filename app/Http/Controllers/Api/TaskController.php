@@ -60,4 +60,16 @@ class TaskController extends Controller
     {
         return response()->json($task);
     }
+    /**
+     * PATCH /api/tasks/{task}/status
+     * body: { status }
+     */
+    public function updateStatus(UpdateTaskStatusRequest $request, Task $task)
+    {
+        $task->update([
+            'status' => $request->validated('status'),
+        ]);
+
+        return response()->json($task);
+    }
 }
