@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    //
     public function index(Request $request)
     {
         /**
@@ -33,5 +32,32 @@ class TaskController extends Controller
         $tasks = $query->orderBy('due_date')->orderByDesc('created_at')->get();
 
         return response()->json($tasks);
+    }
+    /**
+     * POST /api/tasks
+     * body: { title, description?, status?, due_date }
+     */
+    public function store(StoreTaskRequest $request)
+    {
+        $data = $request->validated();
+
+        // Default status if not supplied
+        $status = $data['status'] ?? TaskStatus::TODO->value;
+
+        $task = Task::create([
+            'title'       => $data['title'],
+            'description' => $data['description'] ?? null,
+            'status'      => $status,
+            'due_date'      => $data['due_date'],
+        ]);
+
+        return response()->json($task, 201);
+    }
+    /**
+     * GET /api/tasks/{task}
+     */
+    public function show(Task $task)
+    {
+        return response()->json($task);
     }
 }
