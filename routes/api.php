@@ -3,7 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
-use App\Models\Task;
+// use App\Models\Task;
+use App\Http\Controllers\Api\TaskController;
 
 
 // Group authenticated routes
@@ -17,6 +18,14 @@ Route::middleware('auth:sanctum')->group(function () {
         return User::all();
     });
 });
+
+Route::get('/tasks', [TaskController::class, 'index']);
+
+// Route::prefix('tasks')->group(
+//     function () {
+//         Route::get('/', [TaskController::class, 'index']);
+//     }
+// );
 
 // Route::get('/user', function (Request $request) {
 //     return $request->user();

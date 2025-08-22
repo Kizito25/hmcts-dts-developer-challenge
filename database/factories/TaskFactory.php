@@ -24,10 +24,10 @@ class TaskFactory extends Factory
         $status = fake()->randomElement(TaskStatus::options());
 
         return [
-            'title'       => fake()->sentence(5),
-            'description' => fake()->optional(0.6)->paragraph(),
+            'title'       => fake()->sentence(4),
+            'description' => fake()->optional(0.1)->paragraph(),
             'status'      => $status,
-            'due_date'      => fake()->dateTimeBetween('-2 days', '+10 days'),
+            'due_date'    => fake()->dateTimeBetween('-2 days', '+10 days'),
         ];
     }
 
