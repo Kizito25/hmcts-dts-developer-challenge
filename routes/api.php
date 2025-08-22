@@ -22,7 +22,7 @@ use App\Http\Controllers\Api\TaskController;
 // Delete a task
 
 
-// Authenticated User routes
+// Authenticated User routes, May developer authentication routes here so users can fetch own Tasks
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
