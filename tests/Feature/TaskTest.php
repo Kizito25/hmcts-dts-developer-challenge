@@ -73,7 +73,7 @@ class TaskTest extends TestCase
         ];
 
         $this->postJson('api/tasks', $data)
-            ->assertUnprocessable() // Same as assertStatus(422)
+            ->assertStatus(422) // Unprocessable Entity
             ->assertJsonValidationErrors('title');
     }
 
@@ -87,7 +87,7 @@ class TaskTest extends TestCase
         ];
 
         $this->postJson('api/tasks', $data)
-            ->assertUnprocessable()
+            ->assertStatus(422)
             ->assertJsonValidationErrors('status');
     }
 
@@ -101,7 +101,7 @@ class TaskTest extends TestCase
         ];
 
         $this->postJson('api/tasks', $data)
-            ->assertUnprocessable()
+            ->assertStatus(422)
             ->assertJsonValidationErrors('due_date');
     }
 }
