@@ -27,3 +27,5 @@ dist-ssr
 
 ./src/App.tsx
 ./src/App_copy.jsx
+./bun.lock
+./package-lock.json
