@@ -54,8 +54,6 @@ const updateStatus = async (taskId, status) => {
     return err.message;
   }
 };
-
-// tasks?status=IN_PROGRESS&overdue=false
 const filterByStatus = async (status, overdueStatus) => {
   try {
     const response = await axios.get(
