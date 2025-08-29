@@ -81,6 +81,7 @@ const NewTask = () => {
             }
           />
         </span>
+
         <button
           type="submit"
           className="form-control border-0 p-3 text-white bg-emerald-500 hover:bg-emerald-600 flex items-center justify-center gap-1 cursor-pointer"
