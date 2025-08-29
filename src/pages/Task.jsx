@@ -31,7 +31,7 @@ const Task = () => {
   };
 
   return (
-    <section className="w-full mx-auto h-full bg-white p-5">
+    <section className="w-full mx-auto h-full bg-white my-5">
       {runChecks() || (
         <div className="border p-4 mb-2 space-y-1">
           <div className="flex justify-between items-center">
