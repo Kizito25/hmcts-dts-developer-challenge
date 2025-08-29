@@ -104,4 +104,71 @@ class TaskTest extends TestCase
             ->assertStatus(422)
             ->assertJsonValidationErrors('due_date');
     }
+
+    // test to update a status of a task
+    public function test_can_update_a_task_status(): void
+    {
+        $task = Task::factory()->create();
+        $data = [
+            'status' => TaskStatus::DONE->value,
+        ];
+
+        $response = $this->putJson("api/tasks/{$task->id}", $data);
+
+        $response->assertStatus(200)
+            ->assertJsonStructure(['data' => $this->taskJsonStructure()])
+            ->assertJsonPath('data.status', TaskStatus::DONE->value);
+
+        $this->assertDatabaseHas('tasks', [
+            'id' => $task->id,
+            'status' => TaskStatus::DONE->value,
+        ]);
+    }
+    public function test_update_task_status_requires_a_valid_status(): void
+    {
+        $task = Task::factory()->create();
+        $data = [
+            'status' => 'invalid-status',
+        ];
+
+        $this->putJson("api/tasks/{$task->id}", $data)
+            ->assertStatus(422)
+            ->assertJsonValidationErrors('status');
+    }
+    public function test_can_retrieve_a_task(): void
+    {
+        $task = Task::factory()->create();
+
+        $response = $this->getJson("api/tasks/{$task->id}");
+
+        $response->assertStatus(200)->assertJsonStructure($this->taskJsonStructure())
+            ->assertJsonPath('id', $task->id);
+    }
+    public function test_can_retrieve_all_tasks(): void
+    {
+        Task::factory(5)->create();
+
+        $response = $this->getJson('api/tasks');
+
+        $response->assertStatus(200)
+            ->assertJsonStructure(['data' => [$this->taskJsonStructure()]]);
+    }
+    public function test_can_delete_a_task(): void
+    {
+        $task = Task::factory()->create();
+
+        $response = $this->deleteJson("api/tasks/{$task->id}");
+
+        $response->assertStatus(204); // No Content
+
+        $this->assertDatabaseMissing('tasks', [
+            'id' => $task->id,
+        ]);
+    }
+    public function test_delete_non_existent_task(): void
+    {
+        $response = $this->deleteJson('api/tasks/99999');
+
+        $response->assertStatus(404);
+    }
 }
