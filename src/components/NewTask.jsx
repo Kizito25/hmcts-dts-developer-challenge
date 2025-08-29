@@ -26,17 +26,17 @@ const NewTask = () => {
         <input
           required
           placeholder="Title"
-          className="border p-2 mr-2 w-full"
+          className="border p-3 w-full"
           onChange={(e) => setDraft({ ...draft, title: e.target.value })}
         />
         <input
           placeholder="Description"
-          className="border p-2 mr-2 w-full"
+          className="border p-3 w-full"
           onChange={(e) => setDraft({ ...draft, description: e.target.value })}
         />
         <select
           required
-          className="border p-2 mr-2 w-full"
+          className="border p-3 w-full"
           onChange={(e) => setDraft({ ...draft, status: e.target.value })}
         >
           <option value="">Select Status</option>
@@ -47,14 +47,15 @@ const NewTask = () => {
         <input
           required
           type="datetime-local"
-          className="border p-2 mr-2 w-full"
+          className="border p-3 w-full"
+          placeholder="Due Date"
           onChange={(e) =>
             setDraft({ ...draft, due_date: e.target.value.toString() })
           }
         />
         <button
           type="submit"
-          className="border border-gray-300 p-2 text-white bg-emerald-500 hover:bg-emerald-600 flex items-center justify-center gap-1 cursor-pointer"
+          className="border-0 p-3 text-white bg-emerald-500 hover:bg-emerald-600 flex items-center justify-center gap-1 cursor-pointer"
         >
           <IconPlus size={16} />
           {creating ? "Adding…" : "Add"}
