@@ -37,7 +37,7 @@ A lightweight REST API for creating, listing, retrieving, updating status, and d
 - **Serialization:** Laravel API Resources (default **`data`** wrapper)
 - **Validation:** Form Requests
 - **Time:** Store & return **UTC**, format **ISO-8601** (e.g. `2025-08-30T12:38:00+00:00`)
-- **Frontend** React frontend found in the 'frontend' branch of this repo
+- **Frontend** React frontend found in the 'frontend' branch of this repo found at [https://github.com/Kizito25/hmcts-dts-developer-challenge/tree/frontend?tab=readme-ov-file](https://github.com/Kizito25/hmcts-dts-developer-challenge/tree/frontend?tab=readme-ov-file)
 
 ---
 
