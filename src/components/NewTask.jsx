@@ -16,7 +16,8 @@ const NewTask = () => {
   return (
     <section className="mb-4 mt-4 border-1 border-gray-300 p-4 bg-white w-full">
       <form
-        className="flex flex-col gap-2"
+        form-control
+        className="flex flex-col gap-2 form-control"
         onSubmit={(e) => {
           e.preventDefault();
           addTask(draft);
@@ -24,19 +25,23 @@ const NewTask = () => {
       >
         <h2 className="text-xl font-bold mb-4">New Task</h2>
         <input
+          form-control
           required
           placeholder="Title"
-          className="border p-3 w-full"
+          className="border p-3 w-full form-control"
           onChange={(e) => setDraft({ ...draft, title: e.target.value })}
         />
         <input
+          form-control
+          required
           placeholder="Description"
-          className="border p-3 w-full"
+          className="border p-3 w-full form-control"
           onChange={(e) => setDraft({ ...draft, description: e.target.value })}
         />
         <select
+          form-control
           required
-          className="border p-3 w-full"
+          className="border p-3 w-full form-control"
           onChange={(e) => setDraft({ ...draft, status: e.target.value })}
         >
           <option value="">Select Status</option>
@@ -46,8 +51,9 @@ const NewTask = () => {
         </select>
         <input
           required
+          form-control
           type="datetime-local"
-          className="border p-3 w-full"
+          className="border p-3 w-full form-control"
           placeholder="Due Date"
           onChange={(e) =>
             setDraft({ ...draft, due_date: e.target.value.toString() })
@@ -55,7 +61,7 @@ const NewTask = () => {
         />
         <button
           type="submit"
-          className="border-0 p-3 text-white bg-emerald-500 hover:bg-emerald-600 flex items-center justify-center gap-1 cursor-pointer"
+          className="form-control border-0 p-3 text-white bg-emerald-500 hover:bg-emerald-600 flex items-center justify-center gap-1 cursor-pointer"
         >
           <IconPlus size={16} />
           {creating ? "Adding…" : "Add"}
