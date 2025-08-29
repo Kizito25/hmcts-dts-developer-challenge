@@ -38,7 +38,7 @@ const NewTask = () => {
         </span>
         <span className="text-sm text-gray-500 mb-2">
           <strong className="text-red-500 mr-2">*</strong>
-          <label htmlFor="description">Title</label>
+          <label htmlFor="description">Description</label>
           <input
             id="description"
             form-control
