@@ -113,7 +113,7 @@ class TaskTest extends TestCase
             'status' => TaskStatus::DONE->value,
         ];
 
-        $response = $this->putJson("api/tasks/{$task->id}", $data);
+        $response = $this->patchJson("api/tasks/{$task->id}/status", $data);
 
         $response->assertStatus(200)
             ->assertJsonStructure(['data' => $this->taskJsonStructure()])
@@ -131,7 +131,7 @@ class TaskTest extends TestCase
             'status' => 'invalid-status',
         ];
 
-        $this->putJson("api/tasks/{$task->id}", $data)
+        $this->patchJson("api/tasks/{$task->id}/status", $data)
             ->assertStatus(422)
             ->assertJsonValidationErrors('status');
     }
