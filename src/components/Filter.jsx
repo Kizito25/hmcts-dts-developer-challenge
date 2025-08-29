@@ -1,5 +1,5 @@
 import React from "react";
-import { IconFilter } from "@tabler/icons-react";
+import { IconFilter2 } from "@tabler/icons-react";
 import useTaskStore from "../../store/taskStore.js";
 
 const Filter = () => {
@@ -11,10 +11,10 @@ const Filter = () => {
   );
 
   return (
-    <section className="h-12 border mt-4 border-dashed border-gray-300 flex items-center justify-center">
-      <div className="flex items-center">
-        <IconFilter size={16} className="mr-2" />
-        <div className="flex items-center justify-between ml-4">
+    <section className="w-full h-12 mt-4 flex items-center">
+      <div className="flex items-center w-full justify-between">
+        <IconFilter2 size={14} className="h-6 w-6 font-thin text-gray-400" />
+        <div className="flex items-center justify-around w-full">
           <select
             className="border p-2 mr-2"
             onChange={(e) => {
@@ -22,7 +22,7 @@ const Filter = () => {
               setStatus(e.target.value);
             }}
           >
-            <option value="">Filter by Status</option>
+            <option value="">Status</option>
             <option value="TODO">To Do</option>
             <option value="IN_PROGRESS">In Progress</option>
             <option value="DONE">Done</option>
@@ -34,9 +34,9 @@ const Filter = () => {
               setOverdueStatus(e.target.value);
             }}
           >
-            <option value="">Filter by Overdue Status</option>
-            <option value="true">Overdue</option>
-            <option value="false">Not Overdue</option>
+            <option value="">Is Overdue?</option>
+            <option value="true">Yes</option>
+            <option value="false">No</option>
           </select>
         </div>
       </div>

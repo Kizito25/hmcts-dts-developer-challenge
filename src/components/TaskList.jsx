@@ -30,7 +30,7 @@ const TaskList = () => {
   };
 
   return (
-    <section className="w-full mx-auto h-full bg-white p-5">
+    <section className="w-full mx-auto h-full bg-white my-5">
       {runChecks() ||
         tasks?.map((task) => (
           <div key={task?.id} className="border p-4 mb-2 space-y-1">

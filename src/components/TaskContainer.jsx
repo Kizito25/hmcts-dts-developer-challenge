@@ -1,7 +1,7 @@
 import React from "react";
 const TaskContainer = ({ children }) => {
   return (
-    <section className="md:max-w-xl md:w-2/1 sm:w-full mx-auto h-full bg-white p-5">
+    <section className="w-full max-w-2xl p-4 bg-white rounded shadow h-full">
       {children}
     </section>
   );

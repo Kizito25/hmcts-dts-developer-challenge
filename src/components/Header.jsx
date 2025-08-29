@@ -8,7 +8,7 @@ const Header = () => {
   const tasksCount = useTaskStore((state) => state.tasks);
 
   return (
-    <header className="flex items-center justify-between">
+    <header className="flex items-center justify-between w-full">
       <h1 className="flex items-center justify-center text-2xl font-bold font-mono gap-2">
         <Link to="/">Task Manager</Link>
         <span className="flex items-center justify-center text-emerald-500 text-sm font-mono h-8 w-8 p-2 rounded-full border-2 border-pink-500">
