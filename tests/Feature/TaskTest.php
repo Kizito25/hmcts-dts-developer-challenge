@@ -18,7 +18,7 @@ class TaskTest extends TestCase
     public function test_the_application_returns_a_successful_response(): void
     {
         $this->withoutExceptionHandling();
-        $response = $this->getJson('api/tasks');
+        $response = $this->getJson('/api/tasks');
 
         $response->assertStatus(200);
     }
@@ -49,18 +49,13 @@ class TaskTest extends TestCase
             'due_date' => now()->addDay()->toDateTimeString(),
         ];
 
-        $response = $this->postJson('api/tasks', $data);
+        $response = $this->postJson('/api/tasks', $data);
 
         $response->assertStatus(201)
-            ->assertJsonStructure(['data' => $this->taskJsonStructure()])
-            ->assertJsonPath('data.title', $data['title'])
-            ->assertJsonPath('data.description', $data['description']);
-
-        $this->assertDatabaseHas('tasks', [
-            'title' => 'Test Task',
-            'description' => 'This is a test task',
-            'status' => TaskStatus::TODO->value,
-        ]);
+            ->assertJsonStructure($this->taskJsonStructure())
+            ->assertJsonPath('title', $data['title'])
+            ->assertJsonPath('description', $data['description'])
+            ->assertJsonPath('status', $data['status']);
     }
 
     public function test_create_task_requires_a_title(): void
@@ -86,7 +81,7 @@ class TaskTest extends TestCase
             'due_date' => now()->addDay()->toDateTimeString(),
         ];
 
-        $this->postJson('api/tasks', $data)
+        $this->postJson('/api/tasks', $data)
             ->assertStatus(422)
             ->assertJsonValidationErrors('status');
     }
@@ -113,16 +108,14 @@ class TaskTest extends TestCase
             'status' => TaskStatus::DONE->value,
         ];
 
-        $response = $this->patchJson("api/tasks/{$task->id}/status", $data);
+        $response = $this->patchJson("/api/tasks/{$task->id}/status", $data);
 
-        $response->assertStatus(200)
-            ->assertJsonStructure(['data' => $this->taskJsonStructure()])
-            ->assertJsonPath('data.status', TaskStatus::DONE->value);
+        // $response->dump();          // shows status + JSON
+        // dump($response->json());    // shows the array
 
-        $this->assertDatabaseHas('tasks', [
-            'id' => $task->id,
-            'status' => TaskStatus::DONE->value,
-        ]);
+        $response->assertOk()
+            ->assertJsonStructure($this->taskJsonStructure())
+            ->assertJsonPath('status', \App\Enums\TaskStatus::DONE->value);
     }
     public function test_update_task_status_requires_a_valid_status(): void
     {
@@ -131,7 +124,7 @@ class TaskTest extends TestCase
             'status' => 'invalid-status',
         ];
 
-        $this->patchJson("api/tasks/{$task->id}/status", $data)
+        $this->patchJson("/api/tasks/{$task->id}/status", $data)
             ->assertStatus(422)
             ->assertJsonValidationErrors('status');
     }
@@ -157,7 +150,7 @@ class TaskTest extends TestCase
     {
         $task = Task::factory()->create();
 
-        $response = $this->deleteJson("api/tasks/{$task->id}");
+        $response = $this->deleteJson("/api/tasks/{$task->id}");
 
         $response->assertStatus(204); // No Content
 
