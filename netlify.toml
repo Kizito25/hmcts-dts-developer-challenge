@@ -1,0 +1,10 @@
+# ===== SPA routing =====
+# Send all non-file routes to index.html so React Router can handle them
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  
+
+  
